@@ -57,9 +57,9 @@ void loop(int nCongruencias)
 
     int resMdc = 1;
 
-    for(int i = 0; i < nCongruencias; i++)
+    for (int i = 0; i < nCongruencias; i++)
     {
-        for(int j = i + 1; j < nCongruencias; j++)
+        for (int j = i + 1; j < nCongruencias; j++)
         {
             resMdc *= mdc(valoresM[i], valoresM[j]);
         }
