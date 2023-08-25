@@ -1,13 +1,22 @@
 #include <stdio.h>
 
-int mdc(int primeiro, int segundo)
+int euclide(int um, int dois)
 {
-    if (segundo == 0)
+    if(dois == 0)
     {
-        return primeiro;
+        return um;
     }
 
-    return mdc(segundo, primeiro % segundo);
+    return euclide(dois, um % dois);
+}
+
+int mdc(int primeiro, int segundo, int terceiro)
+{
+    int resultado = euclide(primeiro, segundo);
+
+    resultado = euclide(resultado, terceiro);
+
+    return resultado;
 }
 
 int val(int primeiro, int segundo, int y, int um)
@@ -34,33 +43,45 @@ int val(int primeiro, int segundo, int y, int um)
 
 int main()
 {
-    int bPrimeira, mPrimeira;
+    int aPrimeira, bPrimeira, mPrimeira;
 
-    printf("Digite o valor de B da PRIMEIRA congruencia: ");
+    printf("Digite o valor de A da PRIMEIRA congruencia: \n");
+    scanf("%d", &aPrimeira);
+    printf("Digite o valor de B da PRIMEIRA congruencia: \n");
     scanf("%d", &bPrimeira);
-    printf("Digite o valor de M da PRIMEIRA congruencia: ");
+    printf("Digite o valor de M da PRIMEIRA congruencia: \n");
     scanf("%d", &mPrimeira);
 
-    int bSegunda, mSegunda;
+    int aSegunda, bSegunda, mSegunda;
 
-    printf("Digite o valor de B da SEGUNDA congruencia: ");
+    printf("Digite o valor de A da SEGUNDA congruencia: \n");
+    scanf("%d", &aSegunda);
+    printf("Digite o valor de B da SEGUNDA congruencia: \n");
     scanf("%d", &bSegunda);
-    printf("Digite o valor de M da SEGUNDA congruencia: ");
+    printf("Digite o valor de M da SEGUNDA congruencia: \n");
     scanf("%d", &mSegunda);
 
-    int bTerceira, mTerceira;
+    int aTerceira, bTerceira, mTerceira;
 
-    printf("Digite o valor de B da TERCEIRA congruencia: ");
+    printf("Digite o valor de A da TERCEIRA congruencia: \n");
+    scanf("%d", &aTerceira);
+    printf("Digite o valor de B da TERCEIRA congruencia: \n");
     scanf("%d", &bTerceira);
-    printf("Digite o valor de M da TERCEIRA congruencia: ");
+    printf("Digite o valor de M da TERCEIRA congruencia: \n");
     scanf("%d", &mTerceira);
 
-    int maxDivPrimeiroSegundo = mdc(mPrimeira, mSegunda);
-    int maxDivPrimeiroTerceiro = mdc(mPrimeira, mTerceira);
-    int maxDivSegundoTerceiro = mdc(mSegunda, mTerceira);
+    int maxDiv = mdc(mPrimeira, mSegunda, mTerceira);
 
-    if (maxDivPrimeiroSegundo == 1 && maxDivPrimeiroTerceiro == 1 && maxDivSegundoTerceiro == 1)
+    if (maxDiv == 1 && euclide(aPrimeira, mPrimeira) == 1 && euclide(aSegunda, mSegunda) == 1 && euclide(aTerceira, mTerceira) == 1)
     {
+        int inversoPrimeira = val(aPrimeira, mPrimeira, 2, 1) % mPrimeira;
+        int inversoSegunda = val(aSegunda, mSegunda, 2, 1) % mSegunda;
+        int inversoTerceira =   val(aTerceira, mTerceira, 2, 1) % mTerceira;
+
+        bPrimeira = bPrimeira * inversoPrimeira;
+        bSegunda = bSegunda * inversoSegunda;
+        bTerceira = bTerceira * inversoTerceira;
+
         int M = mPrimeira * mSegunda * mTerceira;
 
         int mUm = M / mPrimeira;
@@ -90,11 +111,11 @@ int main()
 
         resChines = resChines % M;
 
-        printf("RESULTADO UNICO = %d", resChines);
+        printf("RESULTADO UNICO = %d\n", resChines);
     }
     else
     {
-        printf("NAO EXISTE");
+        printf("NAO EXISTE POIS OS VALORES NAO SAO COPRIMOS ENTRE SI\n");
     }
 
     return 0;
